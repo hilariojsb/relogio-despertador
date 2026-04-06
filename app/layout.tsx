@@ -6,6 +6,7 @@ import MainNav from '@/components/navigation/MainNav';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { SITE_URL } from '@/lib/constants/site';
+import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin', 'latin-ext'], display: 'swap' });
 
@@ -40,6 +41,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body className={`${inter.className} min-h-screen antialiased`}>
+      <Script
+  async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4208189640464365"
+  crossOrigin="anonymous"
+  strategy="afterInteractive"
+/>       
         <ThemeProvider>
           <div className="app-shell-bg" aria-hidden />
           <div className="flex min-h-screen flex-col">
