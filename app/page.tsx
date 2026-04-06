@@ -74,19 +74,25 @@ export default function HomePage() {
         />
       </InfoCard>
 
-      <InfoCard title="Por que usar o Relógio Despertador">
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-8">
-          <div>
-            <p className="mb-1.5 font-medium text-foreground/80">Precisão</p>
-            <p>Sincronizado com o relógio do seu dispositivo para leitura estável e previsível.</p>
+      <InfoCard title="Por que usar o Relógio Despertador" className="[&_h2]:text-center">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+            <p className="mb-2 text-sm font-semibold text-foreground">Precisão</p>
+            <p className="text-xs leading-relaxed text-muted-foreground sm:text-sm">
+              Sincronizado com o relógio do seu dispositivo para leitura estável e previsível.
+            </p>
           </div>
-          <div>
-            <p className="mb-1.5 font-medium text-foreground/80">Despertador</p>
-            <p>Configure vários alarmes com volume ajustável e alerta sonoro no horário certo.</p>
+          <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+            <p className="mb-2 text-sm font-semibold text-foreground">Despertador</p>
+            <p className="text-xs leading-relaxed text-muted-foreground sm:text-sm">
+              Configure vários alarmes com volume ajustável e alerta sonoro no horário certo.
+            </p>
           </div>
-          <div>
-            <p className="mb-1.5 font-medium text-foreground/80">Local e offline</p>
-            <p>Preferências guardadas no navegador; o essencial continua disponível sem rede.</p>
+          <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+            <p className="mb-2 text-sm font-semibold text-foreground">Local e offline</p>
+            <p className="text-xs leading-relaxed text-muted-foreground sm:text-sm">
+              Preferências guardadas no navegador; o essencial continua disponível sem rede.
+            </p>
           </div>
         </div>
       </InfoCard>

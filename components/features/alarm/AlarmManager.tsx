@@ -77,32 +77,56 @@ export default function AlarmManager() {
   useEffect(() => {
     if (!mounted) return;
     const resetInterval = window.setInterval(() => {
+      let clearRingingBanner = false;
       setAlarms(prev => {
         const now = new Date();
-        const needsReset = prev.some(a => {
-          if (!a.fired) return false;
-          const [h, m] = a.time.split(':').map(Number);
-          const secondsSinceAlarm =
-            (now.getHours() - h) * 3600 + (now.getMinutes() - m) * 60 + now.getSeconds();
-          return secondsSinceAlarm > 60;
-        });
-        if (!needsReset) return prev;
-        const next = prev.map(a => (a.fired ? { ...a, fired: false } : a));
+        const idsToRemove = prev
+          .filter(a => {
+            if (!a.fired) return false;
+            const [h, m] = a.time.split(':').map(Number);
+            const secondsSinceAlarm =
+              (now.getHours() - h) * 3600 + (now.getMinutes() - m) * 60 + now.getSeconds();
+            return secondsSinceAlarm > 60;
+          })
+          .map(a => a.id);
+
+        if (idsToRemove.length === 0) return prev;
+
+        const remove = new Set(idsToRemove);
+        const ringing = ringingIdRef.current;
+        if (ringing && remove.has(ringing)) {
+          if (stopSoundRef.current) {
+            stopSoundRef.current();
+            stopSoundRef.current = null;
+          }
+          ringingIdRef.current = null;
+          clearRingingBanner = true;
+        }
+
+        const next = prev.filter(a => !remove.has(a.id));
         saveAlarms(next);
         return next;
       });
+      if (clearRingingBanner) setRingingId(null);
     }, 30000);
     return () => window.clearInterval(resetInterval);
   }, [mounted]);
 
-  function stopAlarm() {
+  const stopAlarm = useCallback(() => {
+    const id = ringingIdRef.current;
+    if (!id) return;
     if (stopSoundRef.current) {
       stopSoundRef.current();
       stopSoundRef.current = null;
     }
     ringingIdRef.current = null;
     setRingingId(null);
-  }
+    setAlarms(prev => {
+      const next = prev.filter(a => a.id !== id);
+      saveAlarms(next);
+      return next;
+    });
+  }, []);
 
   function addAlarm() {
     if (!inputTime) return;
@@ -137,10 +161,21 @@ export default function AlarmManager() {
     updateAlarms(next);
   }
 
-  function removeAlarm(id: string) {
-    if (ringingId === id) stopAlarm();
-    updateAlarms(alarms.filter(a => a.id !== id));
-  }
+  const removeAlarm = useCallback((id: string) => {
+    if (ringingIdRef.current === id) {
+      if (stopSoundRef.current) {
+        stopSoundRef.current();
+        stopSoundRef.current = null;
+      }
+      ringingIdRef.current = null;
+      setRingingId(null);
+    }
+    setAlarms(prev => {
+      const next = prev.filter(a => a.id !== id);
+      saveAlarms(next);
+      return next;
+    });
+  }, []);
 
   if (!mounted) return null;
 
