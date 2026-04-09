@@ -42,7 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="pt-BR" suppressHydrationWarning>
     <head>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4208189640464365"
-     crossorigin="anonymous"></script>
+     crossOrigin="anonymous"></script>
   </head>
       <body className={`${inter.className} min-h-screen antialiased`}>      
         <ThemeProvider>
