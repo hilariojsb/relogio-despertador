@@ -40,13 +40,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-      <body className={`${inter.className} min-h-screen antialiased`}>
-      <Script
-  async
-  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4208189640464365"
-  crossOrigin="anonymous"
-  strategy="afterInteractive"
-/>       
+    <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4208189640464365"
+     crossorigin="anonymous"></script>
+  </head>
+      <body className={`${inter.className} min-h-screen antialiased`}>      
         <ThemeProvider>
           <div className="app-shell-bg" aria-hidden />
           <div className="flex min-h-screen flex-col">
