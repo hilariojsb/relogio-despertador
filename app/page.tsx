@@ -6,9 +6,9 @@ import AlarmManager from '@/components/features/alarm/AlarmManager';
 import FullscreenButton from '@/components/features/fullscreen/FullscreenButton';
 
 export const metadata: Metadata = {
-  title: 'Relógio online grátis',
+  title: 'Relógio Despertador Online Grátis (Com Alarme, Cronômetro e Temporizador)',
   description:
-    'Relógio Despertador online gratuito com alarme, cronômetro e temporizador. Hora local em tempo real e múltiplos despertadores no navegador.',
+    'Use o relógio despertador online grátis com alarme, cronômetro e temporizador. Simples, rápido e funciona no celular e computador sem instalar.',
 };
 
 export default function HomePage() {
