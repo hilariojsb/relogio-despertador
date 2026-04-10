@@ -4,9 +4,9 @@ import { AppShell, FaqList, InfoCard, PageHeader } from '@/components/layout';
 import PomodoroTimer from '@/components/features/pomodoro/PomodoroTimer';
 
 export const metadata: Metadata = {
-  title: 'Pomodoro online grátis',
+  title: 'Pomodoro Online 25 Minutos (Foco e Produtividade)',
   description:
-    'Timer Pomodoro online gratuito: 25 minutos de foco, 5 de pausa. Melhore sua produtividade com a técnica Pomodoro direto no navegador.',
+    'Use o método Pomodoro online para manter foco e produtividade. Temporizador automático com ciclos de trabalho e pausa.',
 };
 
 export default function PomodoroPage() {

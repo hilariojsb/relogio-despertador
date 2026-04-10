@@ -4,9 +4,9 @@ import { AppShell, FaqList, InfoCard, PageHeader } from '@/components/layout';
 import Timer from '@/components/features/timer/Timer';
 
 export const metadata: Metadata = {
-  title: 'Temporizador online grátis',
+  title: 'Temporizador Online com Alarme (Grátis e Simples)',
   description:
-    'Temporizador online com contagem regressiva, presets rápidos e alarme sonoro. Ideal para culinária, exercícios e estudos.',
+    'Temporizador online com alarme sonoro. Defina minutos ou horas facilmente e receba alerta no tempo certo. Funciona sem instalar.',
 };
 
 export default function TemporizadorPage() {

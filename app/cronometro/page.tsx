@@ -4,9 +4,9 @@ import { AppShell, FaqList, InfoCard, PageHeader } from '@/components/layout';
 import Stopwatch from '@/components/features/stopwatch/Stopwatch';
 
 export const metadata: Metadata = {
-  title: 'Cronômetro online com milissegundos',
+  title: 'Cronômetro Online Grátis (Preciso e Fácil de Usar)',
   description:
-    'Cronômetro online gratuito com milissegundos, marcação de voltas e histórico. Preciso, rápido e fácil de usar.',
+    'Cronômetro online grátis com alta precisão. Ideal para treino, estudo e atividades do dia a dia. Simples e rápido de usar.',
 };
 
 export default function CronometroPage() {

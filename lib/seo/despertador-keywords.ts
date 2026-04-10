@@ -56,14 +56,8 @@ function minuteVariant(minutes: number): DespertadorSeoVariant {
 
   return {
     slug,
-    metaTitle:
-      minutes <= 10
-        ? `Despertador ${minutes} minutos | Alarme online grátis — Relógio Despertador Online`
-        : `Despertador ${minutes} min — alarme no navegador | Relógio Despertador Online`,
-    metaDescription:
-      minutes <= 10
-        ? `Despertador de ${minutes} minutos online: atalho rápido, som ajustável, sem instalar app. Ideal para pausas, estudo e lembretes no PC ou celular.`
-        : `Configure alarme de ${minutes} minutos no navegador. Relógio Despertador: leve, com volume configurável e lista de horários. Funciona sem instalação.`,
+    metaTitle: `Despertador ${minutes} Minutos Online (Grátis com Alarme)`,
+    metaDescription: `Use o despertador de ${minutes} minutos online grátis com alarme automático. Simples, rápido e sem precisar instalar.`,
     keywords: [
       `despertador ${minutes} minutos`,
       `alarme ${minutes} minutos`,

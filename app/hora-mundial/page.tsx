@@ -4,9 +4,9 @@ import { AppShell, FaqList, InfoCard, PageHeader } from '@/components/layout';
 import WorldClock from '@/components/features/world-clock/WorldClock';
 
 export const metadata: Metadata = {
-  title: 'Hora mundial em tempo real',
+  title: 'Hora Mundial Online (Relógio de Todos os Países em Tempo Real)',
   description:
-    'Veja a hora atual em várias cidades. Relógio mundial com fuso horário em tempo real.',
+    'Veja a hora mundial online em tempo real. Compare horários de diferentes países e cidades de forma rápida e precisa.',
 };
 
 export default function HoraMundialPage() {

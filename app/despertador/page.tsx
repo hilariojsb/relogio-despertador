@@ -4,9 +4,9 @@ import { DespertadorHubExtraSections } from '@/components/features/despertador/D
 import { DespertadorRelatedSeoLinks } from '@/components/features/despertador/DespertadorRelatedSeoLinks';
 
 export const metadata: Metadata = {
-  title: 'Despertador online grátis',
+  title: 'Despertador Online Grátis (Com Alarme Alto e Fácil de Usar)',
   description:
-    'Configure alarmes online gratuitamente. Múltiplos despertadores com som, sem precisar instalar nada. Funciona direto no navegador.',
+    'Use o despertador online grátis com alarme alto e fácil de configurar. Crie vários alarmes direto no navegador sem instalar nada.',
 };
 
 export default function DespertadorPage() {
