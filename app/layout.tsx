@@ -12,6 +12,9 @@ const inter = Inter({ subsets: ['latin', 'latin-ext'], display: 'swap' });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://relogiodespertador.com.br'),
+  alternates: {
+    canonical: '/',
+  },
   title: {
     default: 'Relógio Despertador Online Grátis (Com Alarme, Cronômetro e Temporizador)',
     template: '%s · Relógio Despertador',
@@ -24,6 +27,8 @@ export const metadata: Metadata = {
     description:
       'Use o relógio despertador online grátis com alarme, cronômetro e temporizador. Simples, rápido e funciona no celular e computador sem instalar.',
     type: 'website',
+    url: 'https://relogiodespertador.com.br',
+  siteName: 'Relógio Despertador',
   },
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#f8fbff' },
