@@ -7,5 +7,3 @@ export type { FaqItemData } from './FaqList';
 export { InstitutionalPage, InstitutionalSection } from './InstitutionalPage';
 export { SiteFooter } from './SiteFooter';
 
-export { InfoCard } from './InfoCard';
-
