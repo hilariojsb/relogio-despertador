@@ -62,8 +62,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </body>
     </html>
   );
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> 6af15072844eaf76d036b877f4522eee64ce869a

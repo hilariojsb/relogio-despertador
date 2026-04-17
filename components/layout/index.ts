@@ -6,4 +6,3 @@ export { FaqList } from './FaqList';
 export type { FaqItemData } from './FaqList';
 export { InstitutionalPage, InstitutionalSection } from './InstitutionalPage';
 export { SiteFooter } from './SiteFooter';
-
