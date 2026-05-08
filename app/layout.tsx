@@ -8,6 +8,8 @@ import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { SITE_URL } from '@/lib/constants/site';
 import Script from 'next/script';
 
+const CLARITY_PROJECT_ID = 'wo4s0o5zyn';
+
 const inter = Inter({ subsets: ['latin', 'latin-ext'], display: 'swap' });
 
 export const metadata: Metadata = {
@@ -59,6 +61,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <CookieConsentBanner />
           </div>
         </ThemeProvider>
+        <Script id="microsoft-clarity" strategy="afterInteractive">
+          {`(function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "${CLARITY_PROJECT_ID}");`}
+        </Script>
       </body>
     </html>
   );
