@@ -1,187 +1,24 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Bell, BellOff, Plus, Trash2, Volume2, AlarmClock } from 'lucide-react';
-import { addMinutesToNow, isAlarmFiring, playAlarmSound } from '@/lib/time-utils';
+import { useAlarm } from '@/hooks/useAlarm';
+import { addMinutesToNow, formatAlarmDateLabel } from '@/lib/time-utils';
 import { cn } from '@/lib/utils';
 
-interface Alarm {
-  id: string;
-  time: string;
-  label: string;
-  enabled: boolean;
-  fired: boolean;
-}
-
-const STORAGE_KEY = 'timeos_alarms';
-
-function loadAlarms(): Alarm[] {
-  if (typeof window === 'undefined') return [];
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveAlarms(alarms: Alarm[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(alarms));
-}
-
 export default function AlarmManager() {
-  const [alarms, setAlarms] = useState<Alarm[]>([]);
-  const [inputTime, setInputTime] = useState('');
-  const [inputLabel, setInputLabel] = useState('');
-  const [volume, setVolume] = useState(0.5);
-  const [ringingId, setRingingId] = useState<string | null>(null);
-  const ringingIdRef = useRef<string | null>(null);
-  const stopSoundRef = useRef<(() => void) | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const a = useAlarm();
+  if (!a.mounted) return null;
+  return <AlarmManagerUI {...a} />;
+}
 
-  useEffect(() => {
-    setMounted(true);
-    setAlarms(loadAlarms());
-  }, []);
-
-  const updateAlarms = useCallback((updated: Alarm[]) => {
-    setAlarms(updated);
-    saveAlarms(updated);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-    const interval = window.setInterval(() => {
-      setAlarms(prev => {
-        let changed = false;
-        const next = prev.map(alarm => {
-          if (!alarm.enabled || alarm.fired) return alarm;
-          if (isAlarmFiring(alarm.time)) {
-            if (!ringingIdRef.current) {
-              ringingIdRef.current = alarm.id;
-              setRingingId(alarm.id);
-              stopSoundRef.current = playAlarmSound(volume);
-            }
-            changed = true;
-            return { ...alarm, fired: true };
-          }
-          return alarm;
-        });
-        if (changed) saveAlarms(next);
-        return changed ? next : prev;
-      });
-    }, 1000);
-    return () => window.clearInterval(interval);
-  }, [mounted, volume]);
-
-  useEffect(() => {
-    if (!mounted) return;
-    const resetInterval = window.setInterval(() => {
-      let clearRingingBanner = false;
-      setAlarms(prev => {
-        const now = new Date();
-        const idsToRemove = prev
-          .filter(a => {
-            if (!a.fired) return false;
-            const [h, m] = a.time.split(':').map(Number);
-            const secondsSinceAlarm =
-              (now.getHours() - h) * 3600 + (now.getMinutes() - m) * 60 + now.getSeconds();
-            return secondsSinceAlarm > 60;
-          })
-          .map(a => a.id);
-
-        if (idsToRemove.length === 0) return prev;
-
-        const remove = new Set(idsToRemove);
-        const ringing = ringingIdRef.current;
-        if (ringing && remove.has(ringing)) {
-          if (stopSoundRef.current) {
-            stopSoundRef.current();
-            stopSoundRef.current = null;
-          }
-          ringingIdRef.current = null;
-          clearRingingBanner = true;
-        }
-
-        const next = prev.filter(a => !remove.has(a.id));
-        saveAlarms(next);
-        return next;
-      });
-      if (clearRingingBanner) setRingingId(null);
-    }, 30000);
-    return () => window.clearInterval(resetInterval);
-  }, [mounted]);
-
-  const stopAlarm = useCallback(() => {
-    const id = ringingIdRef.current;
-    if (!id) return;
-    if (stopSoundRef.current) {
-      stopSoundRef.current();
-      stopSoundRef.current = null;
-    }
-    ringingIdRef.current = null;
-    setRingingId(null);
-    setAlarms(prev => {
-      const next = prev.filter(a => a.id !== id);
-      saveAlarms(next);
-      return next;
-    });
-  }, []);
-
-  function addAlarm() {
-    if (!inputTime) return;
-    const alarm: Alarm = {
-      id: Date.now().toString(),
-      time: inputTime,
-      label: inputLabel || 'Alarme',
-      enabled: true,
-      fired: false,
-    };
-    const next = [...alarms, alarm].sort((a, b) => a.time.localeCompare(b.time));
-    updateAlarms(next);
-    setInputTime('');
-    setInputLabel('');
-  }
-
-  function addQuickAlarm(minutes: number) {
-    const time = addMinutesToNow(minutes);
-    const alarm: Alarm = {
-      id: Date.now().toString(),
-      time,
-      label: `+${minutes} min`,
-      enabled: true,
-      fired: false,
-    };
-    const next = [...alarms, alarm].sort((a, b) => a.time.localeCompare(b.time));
-    updateAlarms(next);
-  }
-
-  function toggleAlarm(id: string) {
-    const next = alarms.map(a => (a.id === id ? { ...a, enabled: !a.enabled, fired: false } : a));
-    updateAlarms(next);
-  }
-
-  const removeAlarm = useCallback((id: string) => {
-    if (ringingIdRef.current === id) {
-      if (stopSoundRef.current) {
-        stopSoundRef.current();
-        stopSoundRef.current = null;
-      }
-      ringingIdRef.current = null;
-      setRingingId(null);
-    }
-    setAlarms(prev => {
-      const next = prev.filter(a => a.id !== id);
-      saveAlarms(next);
-      return next;
-    });
-  }, []);
-
-  if (!mounted) return null;
+type AlarmViewProps = ReturnType<typeof useAlarm>;
+function AlarmManagerUI(a: AlarmViewProps) {
+  const [activePreset, setActivePreset] = useState<5 | 10 | 30 | null>(null);
 
   return (
     <div className="w-full space-y-6">
-      {ringingId && (
+      {a.ringingId && (
         <div className="animate-scale-in rounded-2xl border border-destructive/30 bg-destructive p-6 text-center text-destructive-foreground shadow-lg animate-alarm-pulse">
           <div className="flex flex-col items-center gap-3">
             <p className="text-base font-semibold text-white">⏰ Alarme tocando</p>
@@ -189,14 +26,14 @@ export default function AlarmManager() {
               <AlarmClock className="h-7 w-7 text-white" aria-hidden />
             </div>
             <p className="text-lg font-semibold text-white">
-              {alarms.find(a => a.id === ringingId)?.label || 'Alarme'}
+              {a.alarms.find(al => al.id === a.ringingId)?.label || 'Alarme'}
             </p>
             <p className="text-sm text-white/90">
-              {alarms.find(a => a.id === ringingId)?.time}
+              {a.alarms.find(al => al.id === a.ringingId)?.time}
             </p>
             <button
               type="button"
-              onClick={stopAlarm}
+              onClick={a.stopAlarm}
               className="mt-1 min-h-[48px] rounded-xl bg-white px-8 py-3 text-sm font-semibold text-destructive shadow-md transition-transform hover:bg-white/90 active:scale-[0.98]"
             >
               Parar alarme
@@ -212,12 +49,20 @@ export default function AlarmManager() {
         </h2>
 
         <div className="flex flex-wrap gap-2 sm:flex-nowrap">
-          {[5, 10, 30].map(min => (
+          {([5, 10, 30] as const).map(min => (
             <button
               key={min}
               type="button"
-              onClick={() => addQuickAlarm(min)}
-              className="min-h-[44px] flex-1 rounded-xl border border-border bg-muted/50 py-2.5 text-sm font-semibold text-foreground transition-all hover:border-primary/35 hover:bg-primary/10 active:scale-[0.98] sm:min-h-0"
+              onClick={() => {
+                a.setInputTime(addMinutesToNow(min));
+                setActivePreset(min);
+              }}
+              className={cn(
+                'min-h-[44px] flex-1 rounded-xl border py-2.5 text-sm font-semibold text-foreground transition-all active:scale-[0.98] sm:min-h-0',
+                activePreset === min
+                  ? 'border-blue-400 bg-blue-100 hover:border-blue-500 hover:bg-blue-100/90'
+                  : 'border-border bg-muted/50 hover:border-primary/35 hover:bg-primary/10',
+              )}
             >
               +{min} min
             </button>
@@ -227,21 +72,27 @@ export default function AlarmManager() {
         <div className="flex flex-col gap-2 sm:flex-row sm:gap-2">
           <input
             type="time"
-            value={inputTime}
-            onChange={e => setInputTime(e.target.value)}
+            value={a.inputTime}
+            onChange={e => {
+              a.setInputTime(e.target.value);
+              setActivePreset(null);
+            }}
             className="min-h-[44px] flex-1 rounded-xl border border-border bg-card px-4 py-2.5 text-sm text-foreground transition-colors [color-scheme:light] focus:border-primary/45 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:[color-scheme:dark]"
           />
           <input
             type="text"
-            value={inputLabel}
-            onChange={e => setInputLabel(e.target.value)}
+            value={a.inputLabel}
+            onChange={e => a.setInputLabel(e.target.value)}
             placeholder="Rótulo (opcional)"
             className="min-h-[44px] flex-1 rounded-xl border border-border bg-card px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/45 focus:outline-none focus:ring-2 focus:ring-primary/20"
           />
           <button
             type="button"
-            onClick={addAlarm}
-            disabled={!inputTime}
+            onClick={() => {
+              a.addAlarm();
+              setActivePreset(null);
+            }}
+            disabled={!a.inputTime}
             className="flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-xl bg-primary p-2.5 text-primary-foreground transition-all hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-35 active:scale-[0.98]"
             aria-label="Adicionar alarme"
           >
@@ -256,26 +107,26 @@ export default function AlarmManager() {
             min="0"
             max="1"
             step="0.1"
-            value={volume}
-            onChange={e => setVolume(parseFloat(e.target.value))}
+            value={a.volume}
+            onChange={e => a.setVolume(parseFloat(e.target.value))}
             className="h-2 flex-1 cursor-pointer accent-primary"
           />
-          <span className="w-9 text-right text-xs text-muted-foreground">{Math.round(volume * 100)}%</span>
+          <span className="w-9 text-right text-xs text-muted-foreground">{Math.round(a.volume * 100)}%</span>
         </div>
       </div>
 
-      {alarms.length > 0 && (
+      {a.alarms.length > 0 && (
         <div className="space-y-2">
           <h2 className="px-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-            Alarmes ativos ({alarms.filter(a => a.enabled).length})
+            Alarmes ativos ({a.enabledCount})
           </h2>
           <ul className="space-y-2">
-            {alarms.map(alarm => (
+            {a.alarms.map(alarm => (
               <li
                 key={alarm.id}
                 className={cn(
                   'flex min-h-[52px] items-center justify-between rounded-xl border px-4 py-3 transition-colors animate-fade-in',
-                  alarm.id === ringingId
+                  alarm.id === a.ringingId
                     ? 'border-destructive/50 bg-destructive/10'
                     : alarm.enabled
                       ? 'border-border bg-muted/40 hover:bg-muted/70'
@@ -285,7 +136,7 @@ export default function AlarmManager() {
                 <div className="flex min-w-0 items-center gap-3">
                   <button
                     type="button"
-                    onClick={() => toggleAlarm(alarm.id)}
+                    onClick={() => a.toggleAlarm(alarm.id)}
                     className="flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-muted sm:min-h-0 sm:min-w-0"
                     aria-label={alarm.enabled ? 'Desativar' : 'Ativar'}
                   >
@@ -298,11 +149,14 @@ export default function AlarmManager() {
                   <div className="min-w-0">
                     <p className="clock-digit text-base font-semibold text-foreground">{alarm.time}</p>
                     <p className="truncate text-xs text-muted-foreground">{alarm.label}</p>
+                    {alarm.date && (
+                      <p className="text-[0.7rem] text-muted-foreground/80">{formatAlarmDateLabel(alarm.date)}</p>
+                    )}
                   </div>
                 </div>
                 <button
                   type="button"
-                  onClick={() => removeAlarm(alarm.id)}
+                  onClick={() => a.removeAlarm(alarm.id)}
                   className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive sm:min-h-0 sm:min-w-0 sm:p-1.5"
                   aria-label="Remover alarme"
                 >
@@ -314,8 +168,8 @@ export default function AlarmManager() {
         </div>
       )}
 
-      {alarms.length === 0 && (
-        <div className="flex flex-col items-center gap-2 py-10 text-center">
+      {a.alarms.length === 0 && (
+        <div className="flex flex-col items-center gap-2 py-8 text-center">
           <Bell className="h-9 w-9 text-muted-foreground/40" aria-hidden />
           <p className="text-sm text-muted-foreground">Nenhum alarme configurado</p>
         </div>

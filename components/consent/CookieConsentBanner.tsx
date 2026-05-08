@@ -32,7 +32,7 @@ export function CookieConsentBanner() {
     <div
       role="dialog"
       aria-labelledby="cookie-consent-title"
-      className="fixed inset-x-0 bottom-0 z-[100] border-t border-border bg-background/95 p-4 shadow-lg backdrop-blur-md supports-[backdrop-filter]:bg-background/90 sm:p-5"
+      className="app-chrome-cookie fixed inset-x-0 bottom-0 z-[100] border-t border-border bg-background/95 p-4 shadow-lg backdrop-blur-md supports-[backdrop-filter]:bg-background/90 sm:p-5"
     >
       <div className="mx-auto flex max-w-3xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
         <p id="cookie-consent-title" className="text-pretty text-sm leading-relaxed text-muted-foreground">

@@ -11,7 +11,7 @@ import Script from 'next/script';
 const inter = Inter({ subsets: ['latin', 'latin-ext'], display: 'swap' });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://relogiodespertador.com.br'),
+  metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: '/',
   },
@@ -20,15 +20,15 @@ export const metadata: Metadata = {
     template: '%s · Relógio Despertador',
   },
   description:
-    'Use o relógio despertador online grátis com alarme, cronômetro e temporizador. Simples, rápido e funciona no celular e computador sem instalar.',
+    'Relógio online com hora do dispositivo, despertador, cronômetro, temporizador, Pomodoro e hora mundial no navegador, com artigos sobre rotina. Gratuito, sem instalar aplicativo; funciona no celular e no computador.',
   keywords: 'relógio online, despertador online, cronômetro online, temporizador online, pomodoro online, hora mundial, timer online, alarme online',
   openGraph: {
     title: 'Relógio Despertador Online',
     description:
-      'Use o relógio despertador online grátis com alarme, cronômetro e temporizador. Simples, rápido e funciona no celular e computador sem instalar.',
+      'Relógio online, despertador, cronômetro, temporizador, Pomodoro e hora mundial no navegador, com conteúdos sobre rotina. Gratuito, sem instalar app.',
     type: 'website',
-    url: 'https://relogiodespertador.com.br',
-  siteName: 'Relógio Despertador',
+    url: SITE_URL,
+    siteName: 'Relógio Despertador',
   },
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#f8fbff' },

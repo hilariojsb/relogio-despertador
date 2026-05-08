@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
-import { AlarmClock, Brain, Clock, Globe, Hourglass, Timer } from 'lucide-react';
+import { AlarmClock, BookOpen, Brain, Clock, Globe, Hourglass, Timer } from 'lucide-react';
 
 export interface NavItem {
   href: string;
@@ -14,4 +14,5 @@ export const NAV_ITEMS: NavItem[] = [
   { href: '/temporizador', label: 'Temporizador', icon: Hourglass },
   { href: '/pomodoro', label: 'Pomodoro', icon: Brain },
   { href: '/hora-mundial', label: 'Hora Mundial', icon: Globe },
+  { href: '/blog', label: 'Blog', icon: BookOpen },
 ];

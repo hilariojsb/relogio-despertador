@@ -1,0 +1,21 @@
+/**
+ * Estilos exclusivos da rota /hora-mundial.
+ * Todos os seletores começam em .world-clock-page — não afeta outras páginas.
+ */
+
+.world-clock-page .time-separator-main {
+  color: inherit;
+  opacity: 1;
+}
+
+.world-clock-page .time-separator-seconds {
+  opacity: 0.55;
+  font-size: 0.85em;
+}
+
+.world-clock-page .time-seconds {
+  opacity: 0.7;
+  font-weight: 500;
+  /* Ligeiramente menor que HH:MM; relativo ao bloco pai (mantém tabular-nums herdado de .clock-digit). */
+  font-size: 0.9em;
+}

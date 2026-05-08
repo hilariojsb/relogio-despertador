@@ -3,7 +3,7 @@ import { AppShell } from '@/components/layout/AppShell';
 
 export default function NotFound() {
   return (
-    <AppShell maxWidth="3xl" className="flex flex-col items-center justify-center py-16 text-center sm:py-24">
+    <AppShell maxWidth="3xl" className="flex flex-col items-center justify-center py-16 text-center">
       <p className="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground">Erro 404</p>
       <h1 className="mt-3 text-balance text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
         Página não encontrada

@@ -6,9 +6,9 @@ interface AdBannerProps {
 }
 
 const heights: Record<AdBannerProps['slot'], string> = {
-  top: 'min-h-[5rem] sm:min-h-[6rem]',
-  middle: 'min-h-[6rem] sm:min-h-[7rem]',
-  bottom: 'min-h-[5rem] sm:min-h-[6rem]',
+  top: 'min-h-[4.5rem] sm:min-h-[5.5rem]',
+  middle: 'min-h-[40px] sm:min-h-[56px]',
+  bottom: 'min-h-[4.5rem] sm:min-h-[5.5rem]',
 };
 
 /**

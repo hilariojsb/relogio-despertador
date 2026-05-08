@@ -16,7 +16,7 @@ export function InstitutionalPage({
         <h1 className="mb-8 text-balance text-3xl font-semibold tracking-tight text-[#0F172A] dark:text-slate-100 md:mb-10 md:text-4xl">
           {title}
         </h1>
-        <div className="space-y-10 md:space-y-12">{children}</div>
+        <div className="space-y-8">{children}</div>
       </article>
     </AppShell>
   );

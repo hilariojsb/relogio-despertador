@@ -69,7 +69,7 @@ const CityCard = memo(function CityCard({
       </div>
 
       <div className="mt-4">
-        <p className="clock-digit text-3xl font-bold tabular-nums text-foreground" suppressHydrationWarning>
+        <p className="clock-digit text-3xl font-bold text-foreground" suppressHydrationWarning>
           {timeStr}
         </p>
         <p className="mt-1 text-xs capitalize text-muted-foreground" suppressHydrationWarning>

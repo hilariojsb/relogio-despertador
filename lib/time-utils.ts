@@ -6,21 +6,22 @@ export function formatTime(date: Date, seconds = true): string {
 }
 
 export function formatDuration(ms: number, showMs = false): string {
-  const totalSeconds = Math.floor(ms / 1000);
+  const t = Math.floor(ms);
+  const totalSeconds = Math.floor(t / 1000);
   const hours = Math.floor(totalSeconds / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const secs = totalSeconds % 60;
-  const millis = Math.floor((ms % 1000) / 10);
+  const centis = Math.floor((t % 1000) / 10);
 
   const h = String(hours).padStart(2, '0');
   const m = String(minutes).padStart(2, '0');
   const s = String(secs).padStart(2, '0');
-  const ms2 = String(millis).padStart(2, '0');
+  const cs2 = String(centis).padStart(2, '0');
 
   if (hours > 0) {
-    return showMs ? `${h}:${m}:${s}.${ms2}` : `${h}:${m}:${s}`;
+    return showMs ? `${h}:${m}:${s}.${cs2}` : `${h}:${m}:${s}`;
   }
-  return showMs ? `${m}:${s}.${ms2}` : `${m}:${s}`;
+  return showMs ? `${m}:${s}.${cs2}` : `${m}:${s}`;
 }
 
 export function parseTimeString(timeStr: string): { hours: number; minutes: number } | null {
@@ -53,6 +54,28 @@ export function isAlarmFiring(alarmTime: string): boolean {
   if (!parsed) return false;
 
   return now.getHours() === parsed.hours && now.getMinutes() === parsed.minutes;
+}
+
+/** Fires at clock minute when time matches, and (if `date` is set) only on that local calendar day (YYYY-MM-DD). */
+export function isAlarmFiringForAlarm(time: string, date?: string): boolean {
+  if (!isAlarmFiring(time)) return false;
+  if (date) {
+    const d = new Date();
+    const today = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    return date === today;
+  }
+  return true;
+}
+
+export function todayISODateLocal(): string {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+export function formatAlarmDateLabel(iso: string): string {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
+  const d = new Date(`${iso}T12:00:00`);
+  return d.toLocaleDateString('pt-BR', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
 export function addMinutesToNow(minutes: number): string {

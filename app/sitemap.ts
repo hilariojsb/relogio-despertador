@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
+import { getAllBlogSlugs } from '@/lib/blog-articles';
 import { SITE_URL } from '@/lib/constants/site';
-import { DESPERTADOR_SEO_VARIANTS } from '@/lib/seo/despertador-keywords';
+import { TIMER_PAGE_MINUTES, timerPagePath } from '@/lib/constants/despertador-timer-pages';
 
 const base = SITE_URL;
 
@@ -16,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/termos-de-uso',
     '/contato',
     '/sobre',
+    '/blog',
   ];
 
   const staticEntries: MetadataRoute.Sitemap = staticPaths.map(path => ({
@@ -33,12 +35,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
           : 0.85,
   }));
 
-  const despertadorSeo: MetadataRoute.Sitemap = DESPERTADOR_SEO_VARIANTS.map(v => ({
-    url: `${base}/despertador/${v.slug}`,
+  const despertadorTimerPages: MetadataRoute.Sitemap = TIMER_PAGE_MINUTES.map(m => ({
+    url: `${base}${timerPagePath(m)}`,
     lastModified: new Date(),
     changeFrequency: 'monthly',
-    priority: 0.75,
+    priority: 0.78,
   }));
 
-  return [...staticEntries, ...despertadorSeo];
+  const blogArticles: MetadataRoute.Sitemap = getAllBlogSlugs().map(slug => ({
+    url: `${base}/blog/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }));
+
+  return [...staticEntries, ...blogArticles, ...despertadorTimerPages];
 }

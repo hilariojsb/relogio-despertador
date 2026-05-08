@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
+import { Clock, Menu, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { NAV_ITEMS } from '@/lib/constants/navigation';
@@ -32,13 +32,18 @@ export default function MainNav() {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur-xl transition-colors duration-300 supports-[backdrop-filter]:bg-background/75">
-        <div className="mx-auto max-w-7xl px-4 sm:px-5">
+      <nav
+        className="app-chrome-top sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur-xl transition-colors duration-300 supports-[backdrop-filter]:bg-background/75"
+      >
+        <div className="mx-auto max-w-6xl px-4">
           <div className="flex h-14 min-h-[3.5rem] items-center justify-between gap-3">
             <Link
               href="/"
-              className="group flex min-h-[44px] min-w-[44px] items-center rounded-xl py-1 pr-2 -ml-1 pl-1 transition-colors hover:bg-muted/80 sm:min-h-0 sm:min-w-0 sm:py-0"
+              className="group flex min-h-[44px] min-w-[44px] items-center gap-2 rounded-xl py-1 pr-2 -ml-1 pl-1 transition-colors hover:bg-muted/80 sm:min-h-0 sm:min-w-0 sm:py-0"
             >
+              <span className="hidden sm:inline-flex h-8 w-8 items-center justify-center rounded-xl bg-primary/12 text-primary">
+                <Clock className="h-4 w-4" aria-hidden />
+              </span>
               <span className="text-[12px] font-semibold leading-tight tracking-tight sm:text-[15px]">
                 <span className="text-foreground">Relógio </span>
                 <span className="text-primary">Despertador</span>
@@ -90,13 +95,13 @@ export default function MainNav() {
         <>
           <button
             type="button"
-            className="fixed inset-0 z-40 animate-nav-backdrop bg-foreground/25 backdrop-blur-[2px] dark:bg-black/50 md:hidden"
+            className="app-chrome-top fixed inset-0 z-40 animate-nav-backdrop bg-foreground/25 backdrop-blur-[2px] dark:bg-black/50 md:hidden"
             aria-label="Fechar menu"
             onClick={() => setMobileOpen(false)}
           />
           <div
             id="mobile-nav-panel"
-            className="fixed inset-x-0 top-14 z-50 max-h-[min(70vh,calc(100dvh-3.5rem))] overflow-y-auto border-b border-border bg-background/98 px-4 py-4 shadow-xl animate-slide-down backdrop-blur-xl md:hidden"
+            className="app-chrome-top fixed inset-x-0 top-14 z-50 max-h-[min(70vh,calc(100dvh-3.5rem))] overflow-y-auto border-b border-border bg-background/98 px-4 py-4 shadow-xl animate-slide-down backdrop-blur-xl md:hidden"
           >
             <div className="mx-auto grid max-w-lg grid-cols-1 gap-1.5">
               {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
