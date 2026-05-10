@@ -476,8 +476,7 @@ export default function PomodoroPageClient() {
       <div className="mx-auto max-w-6xl px-4 lg:px-4">
         <AdBanner slot="top" />
 
-        {/* Hero */}
-        <section className="grid grid-cols-1 gap-8 py-6 lg:py-8 items-start lg:grid-cols-2 lg:items-start lg:gap-8">
+        <section className="-mt-1 grid grid-cols-1 gap-8 items-start pt-0 pb-6 lg:-mt-2 lg:grid-cols-2 lg:items-start lg:gap-8 lg:pb-8">
           <div className="flex min-w-0 flex-col">
             <p
               className="inline-flex w-fit items-center gap-2 rounded-full border border-slate-200/50 px-3.5 py-2 leading-none"
