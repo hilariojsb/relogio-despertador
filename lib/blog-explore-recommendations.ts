@@ -94,6 +94,13 @@ const JOURNEY_BY_FOCUS: Record<string, string[]> = {
     'quanto-tempo-estudar-por-dia',
     'criar-rotina-diaria',
   ],
+  celular: [
+    'pomodoro-pausa-vira-distraicao',
+    'procrastinacao-moderna-estimulos-digitais',
+    'celular-antes-do-estudo-foco-profundo',
+    'micro-distracoes-produtividade-dia',
+    'como-estudar-com-foco',
+  ],
 };
 
 function inferFocus(ctx: ExploreRecoContext): string {

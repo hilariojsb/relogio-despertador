@@ -144,30 +144,44 @@ const POPULAR: { label: string; city: WorldCity }[] = [
 
 const RELATED = [
   {
-    href: "/pomodoro",
-    title: "Pomodoro e blocos de foco",
+    href: "/blog/celular-antes-do-estudo-foco-profundo",
+    title: 'Seu celular destrói o seu "começo"',
     excerpt:
-      "Ciclos de foco e pausas para estudar ou trabalhar com mais clareza.",
-    icon: Clock,
-  },
-  {
-    href: "/blog/despertador-estudar",
-    title: "Despertador para estudar",
-    excerpt:
-      "Encaixe alarmes em blocos de leitura e revisão sem perder o ritmo.",
+      "Entenda por que redes sociais e estímulos rápidos dificultam entrar em foco profundo.",
     icon: BookOpen,
+    category: "Celular",
+    badgeBg: "rgba(234, 88, 12, 0.12)",
+    badgeColor: "#EA580C",
   },
   {
-    href: "/cronometro",
-    title: "Cronômetro online",
-    excerpt: "Meça treinos, tarefas e apresentações com precisão no navegador.",
-    icon: Clock,
+    href: "/blog/pomodoro-pausa-vira-distraicao",
+    title: "O problema real do Pomodoro está na pausa",
+    excerpt:
+      "Por que 5 minutos no celular podem destruir completamente seu ritmo mental.",
+    icon: BookOpen,
+    category: "Produtividade",
+    badgeBg: "rgba(139, 92, 246, 0.12)",
+    badgeColor: "#7C3AED",
   },
   {
-    href: "/temporizador",
-    title: "Temporizador e lembretes",
-    excerpt: "Contagens regressivas para cozinha, estudo e pausas curtas.",
-    icon: Clock,
+    href: "/blog/procrastinacao-moderna-estimulos-digitais",
+    title: "O cérebro moderno perdeu tolerância ao foco",
+    excerpt:
+      "Excesso de estímulo e atenção fragmentada estão tornando tarefas longas mais difíceis.",
+    icon: BookOpen,
+    category: "Produtividade",
+    badgeBg: "rgba(139, 92, 246, 0.12)",
+    badgeColor: "#7C3AED",
+  },
+  {
+    href: "/blog/micro-distracoes-produtividade-dia",
+    title: "Micro distrações estão drenando sua energia",
+    excerpt:
+      "Pequenas interrupções invisíveis acumulam exaustão mental ao longo do dia.",
+    icon: BookOpen,
+    category: "Celular",
+    badgeBg: "rgba(234, 88, 12, 0.12)",
+    badgeColor: "#EA580C",
   },
 ] as const;
 
@@ -767,7 +781,16 @@ export function HoraMundialPageClient() {
           Conteúdos relacionados
         </h2>
         <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {RELATED.map(({ href, title, excerpt, icon: Icon }) => (
+          {RELATED.map(
+            ({
+              href,
+              title,
+              excerpt,
+              icon: Icon,
+              category,
+              badgeBg,
+              badgeColor,
+            }) => (
             <article
               key={href}
               className="flex h-full flex-col rounded-2xl border p-5"
@@ -786,11 +809,11 @@ export function HoraMundialPageClient() {
               <span
                 className="mt-3 inline-block w-fit rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider"
                 style={{
-                  backgroundColor: "rgba(59, 130, 246, 0.12)",
-                  color: PRIMARY,
+                  backgroundColor: badgeBg,
+                  color: badgeColor,
                 }}
               >
-                Blog
+                {category}
               </span>
               <h3
                 className="mt-2 text-base font-bold leading-snug"
@@ -812,7 +835,8 @@ export function HoraMundialPageClient() {
                 Ler artigo →
               </Link>
             </article>
-          ))}
+            ),
+          )}
         </div>
       </section>
 

@@ -1,6 +1,8 @@
 import { articleAcordarHorarioCerto } from '@/lib/blog-articles/article-acordar-horario-certo';
 import { articleComoAcordarCedo } from '@/lib/blog-articles/article-como-acordar-cedo';
 import { articleComoAprenderMelhor } from '@/lib/blog-articles/article-como-aprender-melhor';
+import { articleCelularAtencaoSustentadaFocoProfundo } from '@/lib/blog-articles/article-celular-atencao-sustentada-foco-profundo';
+import { articleMicroDistracoesProdutividadeDia } from '@/lib/blog-articles/article-micro-distracoes-produtividade-dia';
 import { articleComoEstudarComFoco } from '@/lib/blog-articles/article-como-estudar-com-foco';
 import { articleComoManterConsistencia } from '@/lib/blog-articles/article-como-manter-consistencia';
 import { articleComoPararDeProcrastinar } from '@/lib/blog-articles/article-como-parar-de-procrastinar';
@@ -16,8 +18,10 @@ import { articleIntervalo10Minutos } from '@/lib/blog-articles/article-intervalo
 import { articleIntervaloIdealEstudo } from '@/lib/blog-articles/article-intervalo-ideal-estudo';
 import { articleLembretes5Min } from '@/lib/blog-articles/article-alarmes-5min';
 import { articlePomodoro } from '@/lib/blog-articles/article-pomodoro';
+import { articlePomodoroPausaViraDistraicao } from '@/lib/blog-articles/article-pomodoro-pausa-vira-distraicao';
 import { articlePomodoroVsMultitarefa } from '@/lib/blog-articles/article-pomodoro-vs-multitarefa';
 import { articlePorQueProcrastinamos } from '@/lib/blog-articles/article-por-que-procrastinamos';
+import { articleProcrastinacaoModernaEstimulosDigitais } from '@/lib/blog-articles/article-procrastinacao-moderna-estimulos-digitais';
 import { articleQuantosPomodorosPorDia } from '@/lib/blog-articles/article-quantos-pomodoros-por-dia';
 import { articleQuantoTempoEstudarPorDia } from '@/lib/blog-articles/article-quanto-tempo-estudar-por-dia';
 import { articleRotinaMatinalIdeal } from '@/lib/blog-articles/article-rotina-matinal-ideal';
@@ -29,17 +33,21 @@ import { assertValidBlogArticle } from '@/lib/blog-articles/validate-blog-articl
 const ARTICLES: BlogArticle[] = [
   articlePomodoro,
   articleErrosNoPomodoro,
+  articlePomodoroPausaViraDistraicao,
   articlePomodoroVsMultitarefa,
   articleQuantosPomodorosPorDia,
   articleHabitosProdutivos,
   articleComoPararDeProcrastinar,
   articlePorQueProcrastinamos,
+  articleProcrastinacaoModernaEstimulosDigitais,
   articleComoVencerAPreguica,
   articleComoManterConsistencia,
   articleIntervaloIdealEstudo,
   articleQuantoTempoEstudarPorDia,
   articleComoRevisarConteudo,
   articleComoEstudarComFoco,
+  articleCelularAtencaoSustentadaFocoProfundo,
+  articleMicroDistracoesProdutividadeDia,
   articleComoMemorizarMaisRapido,
   articleTecnicasDeEstudoQueFuncionam,
   articleComoAprenderMelhor,
@@ -117,12 +125,34 @@ export function getBlogArticleBySlug(slug: string): BlogArticle | undefined {
   return bySlug.get(slug);
 }
 
-/** Mesma categoria primeiro; exclui o artigo atual. */
+function sharedIntentTagCount(a: BlogArticle, b: BlogArticle): number {
+  const bt = b.tags;
+  if (!bt?.length) return 0;
+  const as = new Set(a.tags ?? []);
+  if (!as.size) return 0;
+  let n = 0;
+  for (const t of bt) {
+    if (as.has(t)) n++;
+  }
+  return n;
+}
+
+/**
+ * Relacionados: prioriza mesma categoria e, em empates, mais tags de intenção em comum (cluster).
+ */
 export function getRelatedBlogArticles(current: BlogArticle, limit = 4): BlogArticle[] {
   const others = ARTICLES.filter((a) => a.slug !== current.slug);
-  const sameCat = others.filter((a) => a.category === current.category);
-  const rest = others.filter((a) => a.category !== current.category);
-  return [...sameCat, ...rest].slice(0, Math.max(0, limit));
+  return [...others]
+    .sort((a, b) => {
+      const catA = a.category === current.category ? 1 : 0;
+      const catB = b.category === current.category ? 1 : 0;
+      if (catB !== catA) return catB - catA;
+      const tagsB = sharedIntentTagCount(current, b);
+      const tagsA = sharedIntentTagCount(current, a);
+      if (tagsB !== tagsA) return tagsB - tagsA;
+      return a.slug.localeCompare(b.slug, 'pt-BR');
+    })
+    .slice(0, Math.max(0, limit));
 }
 
 export type {

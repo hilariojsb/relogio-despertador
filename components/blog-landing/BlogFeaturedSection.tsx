@@ -26,6 +26,8 @@ function categoryBadgeClass(categorySlug: string): string {
       return 'bg-[#2980B9]';
     case 'estudos':
       return 'bg-[#27AE60]';
+    case 'celular':
+      return 'bg-[#E67E22]';
     default:
       return 'bg-[#64748b]';
   }

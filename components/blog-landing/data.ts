@@ -28,6 +28,20 @@ export const FEATURED_POSTS: FeaturedPost[] = [
     date: '30/04/2026',
   },
   {
+    href: '/blog/pomodoro-pausa-vira-distraicao',
+    category: 'PRODUTIVIDADE',
+    categorySlug: 'produtividade',
+    badgeClass: 'bg-violet-600',
+    image:
+      'https://res.cloudinary.com/dtqplznus/image/upload/v1778760486/Voc%C3%AA_n%C3%A3o_falha_no_Pomodoro_no_foco_voc%C3%AA_falha_na_pausa_qv7fyp.png',
+    title:
+      'Você não falha no Pomodoro no foco — você falha na pausa (e isso explica o buraco no seu dia)',
+    excerpt:
+      'Pomodoro pausa, celular e scroll: por que a pausa vira distração, troca de contexto mental e técnicas para voltar ao foco — Pomodoro online.',
+    readMin: 12,
+    date: '15/05/2026',
+  },
+  {
     href: '/blog/pomodoro-vs-multitarefa',
     category: 'PRODUTIVIDADE',
     categorySlug: 'produtividade',
@@ -78,6 +92,48 @@ export const FEATURED_POSTS: FeaturedPost[] = [
       'Por que procrastinamos: causas da procrastinação, psicologia em linguagem simples e falta de motivação — caminho prático sem culpa.',
     readMin: 12,
     date: '03/05/2026',
+  },
+  {
+    href: '/blog/procrastinacao-moderna-estimulos-digitais',
+    category: 'PRODUTIVIDADE',
+    categorySlug: 'produtividade',
+    badgeClass: 'bg-violet-600',
+    image:
+      'https://res.cloudinary.com/dtqplznus/image/upload/v1778759525/Procrastina%C3%A7%C3%A3o_moderna_como_o_excesso_de_est%C3%ADmulos_digitais_rouba_o_seu_come%C3%A7o_ti4wkr.png',
+    title:
+      'Procrastinação moderna: como o excesso de estímulos digitais rouba o seu “começo” (e o que fazer)',
+    excerpt:
+      'Procrastinação moderna, excesso de estímulo e atenção fragmentada: por que travamos no celular, vício em scroll e como recuperar foco com Pomodoro e cronômetro online.',
+    readMin: 14,
+    date: '14/05/2026',
+  },
+  {
+    href: '/blog/celular-antes-do-estudo-foco-profundo',
+    category: 'Celular',
+    categorySlug: 'celular',
+    badgeClass: 'bg-orange-600',
+    image:
+      'https://res.cloudinary.com/dtqplznus/image/upload/v1778796961/Seu_celular_n%C3%A3o_rouba_s%C3%B3_tempo_ele_destr%C3%B3i_sua_capacidade_de_come%C3%A7ar_yctgbl.jpg',
+    title:
+      'Seu celular não rouba só tempo — ele destrói sua capacidade de começar',
+    excerpt:
+      'Distração digital, atenção fragmentada e hiperestimulação: por que o celular dificulta o começo do foco profundo — e como recuperar ritmo com timer no navegador.',
+    readMin: 13,
+    date: '16/05/2026',
+  },
+  {
+    href: '/blog/micro-distracoes-produtividade-dia',
+    category: 'Celular',
+    categorySlug: 'celular',
+    badgeClass: 'bg-orange-600',
+    image:
+      'https://res.cloudinary.com/dtqplznus/image/upload/v1778799663/Micro_distra%C3%A7%C3%B5es_que_parecem_inofensivas_e_destroem_sua_produtividade_ao_longo_do_dia_bf1ssf.png',
+    title:
+      'Micro distrações que parecem inofensivas — e destroem sua produtividade ao longo do dia',
+    excerpt:
+      'Micro interrupções, scroll e troca de contexto: por que somam exaustão mental, sensação falsa de descanso e como recuperar foco com Pomodoro, celular longe e cronômetro.',
+    readMin: 14,
+    date: '14/05/2026',
   },
   {
     href: '/blog/como-parar-de-procrastinar',
@@ -336,6 +392,7 @@ export const FEATURED_POSTS: FeaturedPost[] = [
 
 export const CATEGORY_CHIPS = [
   { label: 'Produtividade', slug: 'produtividade' },
+  { label: 'Celular', slug: 'celular' },
   { label: 'Rotina', slug: 'rotina' },
   { label: 'Estudos', slug: 'estudos' },
   { label: 'Organização', slug: 'organizacao' },
@@ -358,6 +415,14 @@ const POPULAR_POSTS_BASE = [
     readMin: 11,
     image:
       'https://res.cloudinary.com/dtqplznus/image/upload/v1777950393/erros-no-pomodoro-pg-blog_onli2c.jpg',
+  },
+  {
+    href: '/blog/pomodoro-pausa-vira-distraicao',
+    title:
+      'Você não falha no Pomodoro no foco — você falha na pausa (e isso explica o buraco no seu dia)',
+    readMin: 12,
+    image:
+      'https://res.cloudinary.com/dtqplznus/image/upload/v1778760486/Voc%C3%AA_n%C3%A3o_falha_no_Pomodoro_no_foco_voc%C3%AA_falha_na_pausa_qv7fyp.png',
   },
   {
     href: '/blog/pomodoro-vs-multitarefa',
@@ -386,6 +451,30 @@ const POPULAR_POSTS_BASE = [
     readMin: 12,
     image:
       'https://res.cloudinary.com/dtqplznus/image/upload/v1777948104/porque-voce-procastina-pg-blog_c3dxi6.jpg',
+  },
+  {
+    href: '/blog/procrastinacao-moderna-estimulos-digitais',
+    title:
+      'Procrastinação moderna: como o excesso de estímulos digitais rouba o seu “começo” (e o que fazer)',
+    readMin: 14,
+    image:
+      'https://res.cloudinary.com/dtqplznus/image/upload/v1778759525/Procrastina%C3%A7%C3%A3o_moderna_como_o_excesso_de_est%C3%ADmulos_digitais_rouba_o_seu_come%C3%A7o_ti4wkr.png',
+  },
+  {
+    href: '/blog/celular-antes-do-estudo-foco-profundo',
+    title:
+      'Seu celular não rouba só tempo — ele destrói sua capacidade de começar',
+    readMin: 13,
+    image:
+      'https://res.cloudinary.com/dtqplznus/image/upload/v1778796961/Seu_celular_n%C3%A3o_rouba_s%C3%B3_tempo_ele_destr%C3%B3i_sua_capacidade_de_come%C3%A7ar_yctgbl.jpg',
+  },
+  {
+    href: '/blog/micro-distracoes-produtividade-dia',
+    title:
+      'Micro distrações que parecem inofensivas — e destroem sua produtividade ao longo do dia',
+    readMin: 14,
+    image:
+      'https://res.cloudinary.com/dtqplznus/image/upload/v1778799663/Micro_distra%C3%A7%C3%B5es_que_parecem_inofensivas_e_destroem_sua_produtividade_ao_longo_do_dia_bf1ssf.png',
   },
   {
     href: '/blog/como-parar-de-procrastinar',

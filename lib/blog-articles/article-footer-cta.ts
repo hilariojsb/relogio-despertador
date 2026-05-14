@@ -57,6 +57,18 @@ const BY_CATEGORY: Record<string, ArticleFooterCta> = {
       { href: '/despertador', label: 'Despertador' },
     ],
   },
+  Celular: {
+    title: 'Troque o scroll por um bloco com fim visível',
+    description:
+      'Delimite o próximo passo com temporizador ou Pomodoro no navegador — menos negociação interna, mais começo real.',
+    primaryLabel: 'Abrir temporizador',
+    primaryHref: '/temporizador',
+    secondaryLinks: [
+      { href: '/pomodoro', label: 'Pomodoro' },
+      { href: '/cronometro', label: 'Cronômetro' },
+      { href: '/despertador', label: 'Despertador' },
+    ],
+  },
 };
 
 /** CTA genérico quando a categoria não está mapeada (novos artigos, typo, etc.). */
@@ -71,7 +83,7 @@ function normalizeCategoryKey(raw: string): string {
 }
 
 /**
- * Conteúdo do CTA final do artigo, alinhado à categoria editorial (Estudos, Produtividade, Rotina, Organização).
+ * Conteúdo do CTA final do artigo, alinhado à categoria editorial (Estudos, Produtividade, Rotina, Organização, Celular).
  */
 export function getArticleFooterCta(category: string): ArticleFooterCta {
   const trimmed = category.trim();
